@@ -1,0 +1,35 @@
+<html>
+
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="testmorish.js"></script>
+</head>
+<body>
+
+<h1>Self-test Suite for Testmorish</h1>
+
+<script>
+
+var url = "http://json-time.appspot.com/time.json?callback=?";
+
+expect(2, function() {
+    $.getJSON(url, function (result) {
+        ok(true,"Got result back");
+        is(result.tz, "UTC", "in UTC");
+        oldresult = result;
+    });
+});
+
+expect(2, function () {
+    setTimeout(function () {
+        $.getJSON(url, function (result) {
+            ok(true,"Got result back");
+            isnt(result.datetime, oldresult.datetime, "time changed");
+        });
+    }, 1000);
+});
+
+</script>
+
+</body>
+</html>
