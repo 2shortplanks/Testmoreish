@@ -17,7 +17,7 @@
 //    marked as succeded or failed.)
 //
 //    When tests are planned a table is inserted into the webpage in
-//    the div with the id "testmoreish" (or in the body if no such
+//    the div with the id "testmorish" (or in the body if no such
 //    div exists.)  This table contains a row for each planned test.
 //    When the tests are executed these rows are updated and colorised
 //    to indicate the name and result of the test respectivly.
@@ -87,8 +87,8 @@ plan = function (number, func) {
     'number':number
   });
 
-  // find #testmoreish, or if not there, just the body
-  var element = $('#testmoreish');
+  // find #testmorish, or if not there, just the body
+  var element = $('#testmorish');
   if (!element.size())
     element = $("body");
 
