@@ -1,5 +1,7 @@
 <html>
 
+<!-- this file is automatically created from testmoreis.js DO NOT UPDATE -->
+
 <head>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="testmorish.js"></script>
@@ -10,25 +12,23 @@
 
 <script>
 
-var url = "http://json-time.appspot.com/time.json?callback=?";
+var url = "https://twitter.com/users/2shortplanks.json?callback=?";
 
-expect(2, function() {
+plan(2, function() {
     $.getJSON(url, function (result) {
         ok(true,"Got result back");
-        is(result.tz, "UTC", "in UTC");
-        oldresult = result;
+        is(result.name, "Mark Fowler", "It's Mark!");
     });
 });
 
-expect(2, function () {
+plan(2, function () {
     setTimeout(function () {
         $.getJSON(url, function (result) {
-            ok(true,"Got result back");
-            isnt(result.datetime, oldresult.datetime, "time changed");
+            ok(true,"Got result back again");
+            is(result.url, "http://twoshortplanks.com/", "homepage");
         });
     }, 1000);
 });
-
 </script>
 
 </body>

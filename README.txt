@@ -35,21 +35,20 @@ Defines the following functions:
 
 Example usage:
 
-   var url = "http://json-time.appspot.com/time.json?callback=?";
-   
-   plan(2, function() {
-       $.getJSON(url, function (result) {
-           ok(true,"Got result back");
-           is(result.tz, "UTC", "in UTC");
-           oldresult = result;
-       });
-   });
-   
-   plan(2, function () {
-       setTimeout(function () {
-           $.getJSON(url, function (result) {
-               ok(true,"Got result back");
-               isnt(result.datetime, oldresult.datetime, "time changed");
-           });
-       }, 1000);
-   });
+  var url = "https://twitter.com/users/2shortplanks.json?callback=?";
+
+  plan(2, function() {
+      $.getJSON(url, function (result) {
+          ok(true,"Got result back");
+          is(result.name, "Mark Fowler", "It's Mark!");
+      });
+  });
+
+  plan(2, function () {
+      setTimeout(function () {
+          $.getJSON(url, function (result) {
+              ok(true,"Got result back again");
+              is(result.url, "http://twoshortplanks.com/", "homepage");
+          });
+      }, 1000);
+  });
