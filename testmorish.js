@@ -16,10 +16,11 @@
 //    when all planned tests in the previous callback have either been
 //    marked as succeded or failed.)
 //
-//    When tests are planned the web pages is updated to contain
-//    a set of table rows, one for each planned test.  When the tests
-//    are executed these rows are updated and colorised to indicate
-//    the name and result of the test respectivly.
+//    When tests are planned a table is inserted into the webpage in
+//    the div with the id "testmoreish" (or in the body if no such
+//    div exists.)  This table contains a row for each planned test.
+//    When the tests are executed these rows are updated and colorised
+//    to indicate the name and result of the test respectivly.
 //
 //  ok(true_or_false, test_name)
 //
@@ -59,7 +60,7 @@
 // insert basic styling the hard way
 // TODO: Make this not totally suck
 $("head").append(
-	"<style>.testmorish-unknown { background-color: white } .testmorish-pass { background-color: lightgreen; } .testmorish-fail { background-color: red; } "
+	"<style>.testmorish-testresults { width: 780px; border: 1px solid black; margin-bottom: 3px; padding; } .testmorish-testresults tr td { padding: 5px } .testmorish-testresults tr td:first-child { width: 40px } .testmorish-unknown { background-color: white } .testmorish-pass { margin: 0px; padding: 0px; background-color: lightgreen; } .testmorish-fail { background-color: red; } "
 );
 
 var running = 0;
@@ -86,9 +87,14 @@ plan = function (number, func) {
     'number':number
   });
 
-  $('body').append("<table class='testresults'></table>");
+  // find #testmoreish, or if not there, just the body
+  var element = $('#testmoreish');
+  if (!element.size())
+    element = $("body");
+
+  element.append("<table class='testmorish-testresults'></table>");
   for (var i=1; i<=number; i++) {
-    $('.testresults:last').append("<tr class='testmorish-unknown'><td>"+i+"</td><td><i>unnamed</i></td></tr>");
+    $('.testmorish-testresults:last').append("<tr class='testmorish-unknown'><td>"+i+"</td><td><i>unnamed</i></td></tr>");
   }
 
   if (running == 0)

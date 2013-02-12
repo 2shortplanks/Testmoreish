@@ -16,10 +16,11 @@ Defines the following functions:
    when all planned tests in the previous callback have either been
    marked as succeded or failed.)
 
-   When tests are planned the web pages is updated to contain
-   a set of table rows, one for each planned test.  When the tests
-   are executed these rows are updated and colorised to indicate
-   the name and result of the test respectivly.
+   When tests are planned a table is inserted into the webpage in
+   the div with the id "testmoreish" (or in the body if no such
+   div exists.)  This table contains a row for each planned test.
+   When the tests are executed these rows are updated and colorised
+   to indicate the name and result of the test respectivly.
 
  ok(true_or_false, test_name)
 
