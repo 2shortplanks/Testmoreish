@@ -60,7 +60,7 @@
 // insert basic styling the hard way
 // TODO: Make this not totally suck
 $("head").append(
-	"<style>.testmorish-testresults { width: 780px; border: 1px solid black; margin-bottom: 3px; padding; } .testmorish-testresults tr td { padding: 5px } .testmorish-testresults tr td:first-child { width: 40px } .testmorish-unknown { background-color: white } .testmorish-pass { margin: 0px; padding: 0px; background-color: lightgreen; } .testmorish-fail { background-color: red; } "
+	"<style>.testmorish-testresults { width: 780px; border: 1px solid black; margin-bottom: 3px; padding; } .testmorish-testresults tr td { padding: 5px } .testmorish-testresults tr td:first-child { width: 40px } .testmorish-unknown { background-color: white } .testmorish-pass { margin: 0px; padding: 0px; background-color: lightgreen; } .testmorish-fail { background-color: red; } .testmoreish-diag { background: black; color: white; white-space: pre; font-family: monospace; font-size: small; } .testmorish-expected { color: red } .testmorish-got { color: red }  .testmorish-same { color: lightgreen }"
 );
 
 var running = 0;
@@ -112,9 +112,27 @@ ok = function (trueorfalse, name) {
     executeQueuedTest();
 }
 
-// TODO: This should give diagnostic output
 is = function (got, expected, name) {
-  ok(got == expected, name);
+  var result = got == expected;
+  ok(result, name);
+  if (!result) {
+    var failed=$("<div class='testmoreish-diag'>expected:<span class='testmorish-same'></span><span class='testmorish-expected'></span>\n     got:<span class='testmorish-same'></span><span class='testmorish-got'></span>\n</div>");
+    var same = "";
+    if ($.type(got) == "string" && $.type(expected) == "string") {
+      var len = (got.length < expected.length) ? got.length : expected.length;
+      for (var i=0;i<len;i++)
+        if (got[i] != expected[i])
+          break;
+      same = got.substr(0,i);
+      expected = expected.substr(i);
+      got = got.substr(i);
+    } 
+    $('.testmorish-same', failed).text(same);
+    $('.testmorish-expected', failed).text(expected);
+    $('.testmorish-got', failed).text(got);
+    $(".testmorish-fail:last td:last").append(failed);
+  }
+
 };
 isnt = function (got, expected, name) {
   ok(got != expected, name);
